@@ -24,5 +24,12 @@ def bot_login():
     print("Logged in!")
     return r
 
+def run_bot(r, comments_replied_to):
+    print("Scanning for trigger statement...")
+
+    for comment in r.subreddit('totallynotrobots').comments(limit=10):
+        if "Binary me!" in comment.body and comment.id not in comments_replied_to and comment.author != r.user.me():
+            comment_reply = "Hello fellow human! You have triggered the BinaryBot! Your phrase in binary is: "
+
 
 
