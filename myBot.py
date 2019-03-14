@@ -33,7 +33,7 @@ def run_bot(r, comments_replied_to):
 
             comment_reply = "Hello fellow human! You have triggered the BinaryBot! Your phrase in binary is: "
 
-            comment.reply(comment_reply + identifyFormat(comment))
+            comment.reply(comment_reply + identifyFormat(comment.body))
             print("Replied to comment: " + comment.id)
 
             comments_replied_to.append(comment.id)
@@ -46,28 +46,27 @@ def run_bot(r, comments_replied_to):
         time.sleep(10)
 
 def identifyFormat(comment):
-    output = []
+    output = ""
 
-    if isinstance(comment, int):
-        output += " " + decToBinary(comment)
-    return str(output)
+    for word in comment:
+        if isinstance(word, int):
+            # output += " " + decToBinary(word)
+            output += word
+        return str(output)
 
+def testFuction(input):
+    output = " "
+    for word in input:
+        output += str(word)
+    return output
 
 def decToBinary(input):
-    # array to store
-    # binary number
-    binaryNum = [0] * input;
+    bit_string = " " + bin(input)
+    # This slices the 0b from the output bit string
+    output = bit_string[3:len(bit_string)]
 
-    # counter for binary array
-    i = 0;
-    while (input > 0):
-        # storing remainder
-        # in binary array
-        binaryNum[i] = input % 2;
-        input = int(input / 2);
-        i += 1;
+    return output
 
-    return str(binaryNum)
 
 def get_saved_comments():
     if not os.path.isfile("comments_replied_to.txt"):
@@ -89,3 +88,4 @@ comments_replied_to = get_saved_comments()
 
 while True:
     run_bot(r, comments_replied_to)
+
